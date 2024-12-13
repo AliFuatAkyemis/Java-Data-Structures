@@ -8,6 +8,7 @@ public class ArrayStack<T> {
 		this(CAPACITY);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ArrayStack(int capacity) {
 		this.array = (T[]) new Object[capacity];
 	}

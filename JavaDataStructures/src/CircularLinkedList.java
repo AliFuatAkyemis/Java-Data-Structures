@@ -62,6 +62,7 @@ public class CircularLinkedList<T> {
 		this.head = this.head.getNext();
 	}
 	
+	@SuppressWarnings("hiding")
 	class Node<T> {
 		private T data;
 		private Node<T> next;

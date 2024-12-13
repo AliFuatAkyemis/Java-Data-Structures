@@ -9,6 +9,7 @@ public class ArrayQueue<T> {
 		this(CAPACITY);
 	}
 	
+	@SuppressWarnings("unchecked")
 	public ArrayQueue(int capacity) {
 		this.array = (T[]) new Object[capacity];
 	}
@@ -27,7 +28,7 @@ public class ArrayQueue<T> {
 		for (int i = 0;i < this.sz;i++) {
 			res += "[" + this.array[(this.f+i)%this.array.length] + "]" + " > ";
 		}
-		return res.substring(0, res.length()-2);
+		return res.substring(0, res.length()-3);
 	}
 	
 	public T first() {

@@ -1,7 +1,6 @@
 
 public class LinkedQueue<T> {
 	private Node<T> first;
-	private Node<T> last;
 	private int size = 0;
 	
 	public int size() {
@@ -39,10 +38,10 @@ public class LinkedQueue<T> {
 	
 	public void enqueue(T data) {
 		this.first = new Node<T>(data, this.first);
-		if (isEmpty()) this.last = this.first;
 		this.size++;
 	}
 	
+	@SuppressWarnings("hiding")
 	class Node<T> {
 		private T data;
 		private Node<T> next;

@@ -51,6 +51,7 @@ public class SinglyLinkedList<T> {
 		return temp.getData();
 	}
 	
+	@SuppressWarnings("hiding")
 	class Node<T> {
 		private T data;
 		private Node<T> next;

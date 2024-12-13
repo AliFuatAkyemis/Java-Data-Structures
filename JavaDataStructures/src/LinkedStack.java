@@ -45,6 +45,7 @@ public class LinkedStack<T> {
 		this.size++;
 	}
 	
+	@SuppressWarnings("hiding")
 	class Node<T> {
 		private T data;
 		private Node<T> next;
