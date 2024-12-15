@@ -29,8 +29,9 @@ public class ArrayBST<T extends Comparable<? super T>> {
 	}
 	
 	public int getHeight(int index) {
-		if (isEmpty()) return -1;
-		else if (index < 0) return 0;
+		if (isEmpty()) return 0;
+		if (index < 0) return 0;
+		if (this.array[index] == null) return 0;
 		int leftHeight = getHeight(left(index));
 		int rightHeight = getHeight(right(index));
 		return 1 + Math.max(leftHeight, rightHeight);
@@ -161,7 +162,7 @@ public class ArrayBST<T extends Comparable<? super T>> {
 			if (this.array[left(curr)] != null) s1.push(left(curr));
 			if (this.array[right(curr)] != null) s1.push(right(curr));
 		}
-		while (!s2.isEmpty()) res += "[" + s2.pop().toString() + "]" + ", ";
+		while (!s2.isEmpty()) res += "[" + this.array[s2.pop()].toString() + "]" + ", ";
 		System.out.println(res.substring(0, res.length()-2));
 	}
 	
@@ -173,7 +174,7 @@ public class ArrayBST<T extends Comparable<? super T>> {
 		String res = "";
 		Stack<Integer> s = new Stack<>();
 		int curr = 0;
-		while (this.array[curr] != null && !s.isEmpty()) {
+		while (this.array[curr] != null || !s.isEmpty()) {
 			while (this.array[curr] != null) {
 				s.push(curr);
 				curr = left(curr);
