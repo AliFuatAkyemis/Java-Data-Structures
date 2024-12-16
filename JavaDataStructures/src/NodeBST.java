@@ -198,6 +198,7 @@ public class NodeBST<T extends Comparable<? super T>> {
 	class TreeNode<T> {
 		private T data;
 		private TreeNode<T> left, right, parent;
+		private int height = 0;
 		
 		public TreeNode(T data) {
 			this.data = data;
@@ -233,6 +234,14 @@ public class NodeBST<T extends Comparable<? super T>> {
 		
 		public void setParent(TreeNode<T> parent) {
 			this.parent = parent;
+		}
+		
+		public int getHeight() {
+			return this.height;
+		}
+		
+		public void setHeight(int height) {
+			this.height = height;
 		}
 		
 		public String toString() {

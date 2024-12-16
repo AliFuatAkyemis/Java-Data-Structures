@@ -1,3 +1,4 @@
+import java.util.Stack;
 
 public class UnsortedPriorityQueue<K extends Comparable<? super K>, V> extends AbstractPriorityQueue<K, V> {
 	private Node<Entry<K, V>> head;
@@ -62,5 +63,42 @@ public class UnsortedPriorityQueue<K extends Comparable<? super K>, V> extends A
 	public void insert(K key, V value) {
 		this.head = new Node<Entry<K, V>>(new Entry<K, V>(key, value), this.head);
 		this.size++;
+	}
+	
+	private Entry<K, V> sortRemove() {
+		if (isEmpty()) return null;
+		Node<Entry<K, V>> temp = this.head, min = temp;
+		while (temp != null) {
+			if (min.getData().getKey().compareTo(temp.getData().getKey()) > 0) min = temp;
+			temp = temp.getNext();
+		}
+		if (this.head == min) {
+			this.head = this.head.getNext();
+			min.setNext(null);
+			this.size--;
+			return min.getData();
+		} else {
+			temp = this.head;
+			while (temp.getNext() != min) temp = temp.getNext();
+			temp.setNext(min.getNext());
+			min.setNext(null);
+			this.size--;
+			return min.getData();
+		}
+	}
+	
+	private void sortInsert(Entry<K, V> entry) {
+		this.head = new Node<Entry<K, V>>(entry, this.head);
+		this.size++;
+	}
+	
+	public void sort() {
+		Stack<Entry<K, V>> s = new Stack<>();
+		Entry<K, V> temp = null;
+		while (!isEmpty()) {
+			temp = sortRemove();
+			s.push(temp);
+		}
+		while (!s.isEmpty()) sortInsert(s.pop());
 	}
 }

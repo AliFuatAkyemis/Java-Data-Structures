@@ -14,6 +14,7 @@ public class Test {
 //		testAH();
 //		testNBST();
 //		testABST();
+		testNAVL();
 	}
 	
 	public static void testSLL() {
@@ -645,6 +646,10 @@ public class Test {
 		pq.insert(2, "B");
 		System.out.println("Size: " + pq.size());
 		System.out.println(pq.toString());
+		pq.sort();
+		System.out.println("After Sort: ");
+		System.out.println("Size: " + pq.size());
+		System.out.println(pq.toString());
 	}
 	
 	public static void testNH() {
@@ -1072,5 +1077,68 @@ public class Test {
 		abst.preorder();
 		abst.postorder();
 		abst.inorder();
+	}
+	
+	public static void testNAVL() {
+//		NodeBST<Integer> bst = new NodeBST<>();
+//		bst.insert(1);
+//		bst.insert(2);
+//		bst.insert(3);
+//		bst.insert(4);
+//		bst.insert(5);
+//		bst.insert(6);
+//		bst.insert(7);
+//		bst.insert(8);
+//		bst.insert(9);
+//		System.out.println("BST Height: " + bst.getHeight(bst.getRoot()));
+//		bst.levelorder();
+//		bst.preorder();
+//		bst.postorder();
+//		bst.inorder();
+//        NodeAVL<Integer> tree = new NodeAVL<>();
+//        tree.insert(1);
+//        tree.insert(2);
+//        tree.insert(3);
+//        tree.insert(4);
+//        tree.insert(5);
+//        tree.insert(6);
+//        tree.insert(7);
+//        tree.insert(8);
+//        tree.insert(9);
+//        System.out.println("AVL Height: " + tree.getHeight(tree.getRoot()));
+//        tree.levelorder();
+//        tree.preorder();
+//        tree.postorder();
+//        tree.inorder();
+		NodeBST<Integer> bst = new NodeBST<>();
+		bst.insert(5);
+		bst.insert(1);
+		bst.insert(7);
+		bst.insert(2);
+		bst.insert(3);
+		bst.insert(4);
+		bst.insert(6);
+		bst.insert(8);
+		bst.insert(9);
+		System.out.println("BST Height: " + bst.getHeight(bst.getRoot()));
+		bst.levelorder();
+		bst.preorder();
+		bst.postorder();
+		bst.inorder();
+        NodeAVL<Integer> tree = new NodeAVL<>();
+        tree.insert(5);
+        tree.insert(1);
+        tree.insert(7);
+        tree.insert(2);
+        tree.insert(3);
+        tree.insert(4);
+        tree.insert(6);
+        tree.insert(8);
+        tree.insert(9);
+        System.out.println("AVL Height: " + tree.getHeight(tree.getRoot()));
+        tree.levelorder();
+        tree.preorder();
+        tree.postorder();
+        tree.inorder();
 	}
 }
