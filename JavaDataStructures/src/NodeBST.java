@@ -67,9 +67,11 @@ public class NodeBST<T extends Comparable<? super T>> {
 		if (data.compareTo(node.getData()) == 0) {
 			if (isExternal(node)) {
 				if (node != this.root) {
+					TreeNode<T> parent = node.getParent();
 					if (node == node.getParent().getLeft()) node.getParent().setLeft(null);
 					else node.getParent().setRight(null);
 					node.setParent(null);
+					return parent;
 				} else this.root = null;
 			} else {
 				T replace = null;

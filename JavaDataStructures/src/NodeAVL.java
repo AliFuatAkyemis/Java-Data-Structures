@@ -4,13 +4,14 @@ public class NodeAVL<T extends Comparable<? super T>> extends NodeBST<T> {
 	public NodeBST<T>.TreeNode<T> insertRec(NodeBST<T>.TreeNode<T> node, T data) {
 		node = super.insertRec(node, data);
 		updateHeight(node);
-		return rebalance(node);
+		return rebalanceInsert(node);
 	}
 	
 	@Override
 	public NodeBST<T>.TreeNode<T> removeRec(NodeBST<T>.TreeNode<T> node, T data) {
-		// TODO Auto-generated method stub
-		return super.removeRec(node, data);
+		node = super.removeRec(node, data);
+		updateHeight(node);
+		return rebalanceRemove(node);
 	}
 
 	private int height(TreeNode<T> node) {
@@ -19,6 +20,8 @@ public class NodeAVL<T extends Comparable<? super T>> extends NodeBST<T> {
 
 	private void updateHeight(TreeNode<T> node) {
 		if (node != null) node.setHeight(1 + Math.max(height(node.getLeft()), height(node.getRight())));
+		if (node.getLeft() != null) updateHeight(node.getLeft());
+		if (node.getRight() != null) updateHeight(node.getRight());
 	}
 	
 	private int getBalanceFactor(TreeNode<T> node) {
@@ -34,6 +37,18 @@ public class NodeAVL<T extends Comparable<? super T>> extends NodeBST<T> {
 			else if (getBalanceFactor(node.getRight()) >= 1) return rotateRL(node);
 		}
 		return node;
+	}
+	
+	private TreeNode<T> rebalanceInsert(TreeNode<T> node) {
+		return rebalance(node);
+	}
+	
+	private TreeNode<T> rebalanceRemove(TreeNode<T> node) {
+		if (node != null) {
+			rebalance(node);
+			return rebalance(node.getParent());
+		}
+		return null;
 	}
 	
 	private TreeNode<T> leftRotate(TreeNode<T> node) {

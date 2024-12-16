@@ -1120,6 +1120,8 @@ public class Test {
 		bst.insert(6);
 		bst.insert(8);
 		bst.insert(9);
+		bst.remove(9);
+		bst.remove(8);
 		System.out.println("BST Height: " + bst.getHeight(bst.getRoot()));
 		bst.levelorder();
 		bst.preorder();
@@ -1135,6 +1137,8 @@ public class Test {
         tree.insert(6);
         tree.insert(8);
         tree.insert(9);
+        tree.remove(9);
+        tree.remove(8);
         System.out.println("AVL Height: " + tree.getHeight(tree.getRoot()));
         tree.levelorder();
         tree.preorder();
