@@ -14,6 +14,10 @@ public class NodeBST<T extends Comparable<? super T>> {
 		return this.root;
 	}
 	
+	public void setRoot(TreeNode<T> root) {
+		this.root = root;
+	}
+	
 	public int size() {
 		return this.size;
 	}
@@ -57,36 +61,50 @@ public class NodeBST<T extends Comparable<? super T>> {
 	
 	public boolean remove(T data) {
 		if (!contains(data)) return false;
-		removeRec(this.root, data);
+		this.root = removeRec(this.root, data);
 		this.size--;
 		return true;
 	}
 	
 	public TreeNode<T> removeRec(TreeNode<T> node, T data) {
-		if (isEmpty()) return null;
-		if (data.compareTo(node.getData()) == 0) {
-			if (isExternal(node)) {
-				if (node != this.root) {
-					TreeNode<T> parent = node.getParent();
-					if (node == node.getParent().getLeft()) node.getParent().setLeft(null);
-					else node.getParent().setRight(null);
-					node.setParent(null);
-					return parent;
-				} else this.root = null;
-			} else {
-				T replace = null;
-				if (node.getRight() != null) {
-					replace = findMin(node.getRight());
-					removeRec(node.getRight(), replace);
-				} else {
-					replace = findMax(node.getLeft());
-					removeRec(node.getLeft(), replace);
-				}
-				node.setData(replace);
-			}
-		} else if (data.compareTo(node.getData()) < 0) removeRec(node.getLeft(), data);
-		else removeRec(node.getRight(), data);
+		if (node == null) return null;
+		else if (data.compareTo(node.getData()) < 0) {
+			node.setLeft(removeRec(node.getLeft(), data));
+			if (node.getLeft() != null) node.getLeft().setParent(node);
+		} else if (data.compareTo(node.getData()) > 0) {
+			node.setRight(removeRec(node.getRight(), data));
+			if (node.getRight() != null) node.getRight().setParent(node);
+		} else {
+			if (node.getLeft() == null) return node.getRight();
+			if (node.getRight() == null) return node.getLeft();
+			node.setData(findMin(node.getRight()));
+			node.setRight(removeRec(node.getRight(), node.getData()));
+		}
 		return node;
+//		if (isEmpty()) return null;
+//		if (data.compareTo(node.getData()) == 0) {
+//			if (isExternal(node)) {
+//				if (node != this.root) {
+//					TreeNode<T> parent = node.getParent();
+//					if (node == node.getParent().getLeft()) node.getParent().setLeft(null);
+//					else node.getParent().setRight(null);
+//					node.setParent(null);
+//					return parent;
+//				} else this.root = null;
+//			} else {
+//				T replace = null;
+//				if (node.getRight() != null) {
+//					replace = findMin(node.getRight());
+//					removeRec(node.getRight(), replace);
+//				} else {
+//					replace = findMax(node.getLeft());
+//					removeRec(node.getLeft(), replace);
+//				}
+//				node.setData(replace);
+//			}
+//		} else if (data.compareTo(node.getData()) < 0) removeRec(node.getLeft(), data);
+//		else removeRec(node.getRight(), data);
+//		return node;
 	}
 	
 	public T findMin(TreeNode<T> node) {

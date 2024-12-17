@@ -6,12 +6,12 @@ public class NodeAVL<T extends Comparable<? super T>> extends NodeBST<T> {
 		updateHeight(node);
 		return rebalanceInsert(node);
 	}
-	
+
 	@Override
-	public NodeBST<T>.TreeNode<T> removeRec(NodeBST<T>.TreeNode<T> node, T data) {
-		node = super.removeRec(node, data);
-		updateHeight(node);
-		return rebalanceRemove(node);
+	public boolean remove(T data) {
+		boolean res = super.remove(data);
+		rebalanceRemove(delPos(this.getRoot(), null, data));
+		return res;
 	}
 
 	private int height(TreeNode<T> node) {
@@ -19,9 +19,10 @@ public class NodeAVL<T extends Comparable<? super T>> extends NodeBST<T> {
 	}
 
 	private void updateHeight(TreeNode<T> node) {
-		if (node != null) node.setHeight(1 + Math.max(height(node.getLeft()), height(node.getRight())));
-		if (node.getLeft() != null) updateHeight(node.getLeft());
-		if (node.getRight() != null) updateHeight(node.getRight());
+		if (node != null) {
+			node.setHeight(1 + Math.max(height(node.getLeft()), height(node.getRight())));
+			updateHeight(node.getParent());
+		}
 	}
 	
 	private int getBalanceFactor(TreeNode<T> node) {
@@ -29,12 +30,13 @@ public class NodeAVL<T extends Comparable<? super T>> extends NodeBST<T> {
 	}
 	
 	private TreeNode<T> rebalance(TreeNode<T> node) {
+		updateHeight(node);
 		if (getBalanceFactor(node) > 1) {
-			if (getBalanceFactor(node.getLeft()) >= 1) return rightRotate(node);
-			else if (getBalanceFactor(node.getLeft()) <= -1) return rotateLR(node);
+			if (getBalanceFactor(node.getLeft()) <= -1) return rotateLR(node);
+			return rightRotate(node);
 		} else if (getBalanceFactor(node) < -1) {
-			if (getBalanceFactor(node.getRight()) <= -1) return leftRotate(node);
-			else if (getBalanceFactor(node.getRight()) >= 1) return rotateRL(node);
+			if (getBalanceFactor(node.getRight()) >= 1) return rotateRL(node);
+			return leftRotate(node);
 		}
 		return node;
 	}
@@ -46,9 +48,19 @@ public class NodeAVL<T extends Comparable<? super T>> extends NodeBST<T> {
 	private TreeNode<T> rebalanceRemove(TreeNode<T> node) {
 		if (node != null) {
 			rebalance(node);
-			return rebalance(node.getParent());
+			return rebalanceRemove(node.getParent());
 		}
 		return null;
+	}
+	
+	private TreeNode<T> delPos(TreeNode<T> node, TreeNode<T> parent, T data) {
+		if (node == null) {
+			if (parent == null) return node;
+			return parent;
+		}
+		else if (data.compareTo(node.getData()) < 0) return delPos(node.getLeft(), node, data);
+		else if (data.compareTo(node.getData()) > 0) return delPos(node.getRight(), node, data);
+		return node;
 	}
 	
 	private TreeNode<T> leftRotate(TreeNode<T> node) {
@@ -62,6 +74,7 @@ public class NodeAVL<T extends Comparable<? super T>> extends NodeBST<T> {
 		temp.setParent(parent);
 	    updateHeight(node);
 	    updateHeight(temp);
+	    if (node == this.getRoot()) setRoot(temp);
 		return temp;
 	}
 	
@@ -76,6 +89,7 @@ public class NodeAVL<T extends Comparable<? super T>> extends NodeBST<T> {
 		temp.setParent(parent);
 	    updateHeight(node);
 	    updateHeight(temp);
+	    if (node == this.getRoot()) setRoot(temp);
 		return temp;
 	}
 	
