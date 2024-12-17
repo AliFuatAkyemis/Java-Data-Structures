@@ -20,6 +20,14 @@ public class ArrayBST<T extends Comparable<? super T>> {
 		return this.array[0];
 	}
 	
+	public T getPosition(int index) {
+		return this.array[index];
+	}
+	
+	public void setPosition(int index, T data) {
+		this.array[index] = data;
+	}
+	
 	public int size() {
 		return this.size;
 	}
@@ -31,16 +39,30 @@ public class ArrayBST<T extends Comparable<? super T>> {
 	public int getHeight(int index) {
 		if (isEmpty()) return 0;
 		if (index < 0) return 0;
-		if (this.array[index] == null) return 0;
-		int leftHeight = getHeight(left(index));
-		int rightHeight = getHeight(right(index));
-		return 1 + Math.max(leftHeight, rightHeight);
+		int max = height(index);
+		Queue<Integer> q = new LinkedList<>();
+		q.add(index);
+		while (!q.isEmpty()) {
+			int curr = q.poll();
+			if (max < height(curr)) max = height(curr);
+			if (this.array[left(curr)] != null) q.add(left(curr));
+			if (this.array[right(curr)] != null) q.add(right(curr));
+		}
+		return max;
 	}
 	
 	public int getDepth(int index) {
 		if (index <= 0) return 0;
 		else if (index%2 == 1) return 1 + getDepth(leftParent(index));
 		else return 1 + getDepth(rightParent(index));
+	}
+	
+	public int height(int index) {
+		if (index < 0) return 0;
+		int res = 0, iter = 0;
+		do iter += Math.pow(2, res++);
+		while (iter < index);
+		return res;
 	}
 	
 	public void insert(T data) {

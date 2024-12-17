@@ -13,8 +13,8 @@ public class Test {
 //		testNH();
 //		testAH();
 //		testNBST();
-//		testABST();
-		testNAVL();
+		testABST();
+//		testNAVL();
 	}
 	
 	public static void testSLL() {
@@ -965,6 +965,7 @@ public class Test {
 		nbst.insert(5);
 		nbst.insert(7);
 		System.out.println("Size: " + nbst.size());
+		System.out.println("Height: " + nbst.getHeight(nbst.getRoot()));
 		nbst.levelorder();
 		nbst.preorder();
 		nbst.postorder();
@@ -1073,6 +1074,7 @@ public class Test {
 		abst.insert(5);
 		abst.insert(7);
 		System.out.println("Size: " + abst.size());
+		System.out.println("Height: " + abst.getHeight(0));
 		abst.levelorder();
 		abst.preorder();
 		abst.postorder();
