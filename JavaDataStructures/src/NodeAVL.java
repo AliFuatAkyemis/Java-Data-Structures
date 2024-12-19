@@ -21,7 +21,6 @@ public class NodeAVL<T extends Comparable<? super T>> extends NodeBST<T> {
 	private void updateHeight(TreeNode<T> node) {
 		if (node != null) {
 			node.setHeight(1 + Math.max(height(node.getLeft()), height(node.getRight())));
-			updateHeight(node.getParent());
 		}
 	}
 	
@@ -30,7 +29,6 @@ public class NodeAVL<T extends Comparable<? super T>> extends NodeBST<T> {
 	}
 	
 	private TreeNode<T> rebalance(TreeNode<T> node) {
-		updateHeight(node);
 		if (getBalanceFactor(node) > 1) {
 			if (getBalanceFactor(node.getLeft()) <= -1) return rotateLR(node);
 			return rightRotate(node);

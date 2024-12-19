@@ -13,7 +13,7 @@ public class Test {
 //		testNH();
 //		testAH();
 //		testNBST();
-		testABST();
+//		testABST();
 //		testNAVL();
 	}
 	
@@ -1082,21 +1082,7 @@ public class Test {
 	}
 	
 	public static void testNAVL() {
-        NodeBST<Integer> bst = new NodeBST<>();
-        bst.insert(5);
-        bst.insert(1);
-        bst.insert(7);
-        bst.insert(2);
-        bst.insert(3);
-        bst.insert(4);
-        bst.insert(6);
-        bst.insert(8);
-        bst.insert(9);
-        System.out.println("BST Height: " + bst.getHeight(bst.getRoot()));
-        bst.levelorder();
-        bst.preorder();
-        bst.postorder();
-        bst.inorder();
+//        NodeBST<Integer> tree = new NodeBST<>();
         NodeAVL<Integer> tree = new NodeAVL<>();
         tree.insert(5);
         tree.insert(1);
@@ -1107,20 +1093,20 @@ public class Test {
         tree.insert(6);
         tree.insert(8);
         tree.insert(9);
-        System.out.println("AVL Height: " + tree.getHeight(tree.getRoot()));
+        System.out.println("Height: " + tree.getHeight(tree.getRoot()));
         tree.levelorder();
         tree.preorder();
         tree.postorder();
         tree.inorder();
         tree.remove(9);
         tree.remove(8);
-        System.out.println("AVL Height: " + tree.getHeight(tree.getRoot()));
+        System.out.println("Height: " + tree.getHeight(tree.getRoot()));
         tree.levelorder();
         tree.preorder();
         tree.postorder();
         tree.inorder();
         tree.remove(4);
-        System.out.println("AVL Height: " + tree.getHeight(tree.getRoot()));
+        System.out.println("Height: " + tree.getHeight(tree.getRoot()));
         tree.levelorder();
         tree.preorder();
         tree.postorder();
@@ -1128,7 +1114,7 @@ public class Test {
         tree.remove(5);
         tree.remove(7);
         tree.remove(6);
-        System.out.println("AVL Height: " + tree.getHeight(tree.getRoot()));
+        System.out.println("Height: " + tree.getHeight(tree.getRoot()));
         tree.levelorder();
         tree.preorder();
         tree.postorder();
@@ -1139,7 +1125,7 @@ public class Test {
         tree.remove(2);
         tree.remove(2);
         tree.remove(2);
-        System.out.println("AVL Height: " + tree.getHeight(tree.getRoot()));
+        System.out.println("Height: " + tree.getHeight(tree.getRoot()));
         tree.levelorder();
         tree.preorder();
         tree.postorder();
