@@ -66,7 +66,7 @@ public class NodeBST<T extends Comparable<? super T>> {
 		return true;
 	}
 	
-	public TreeNode<T> removeRec(TreeNode<T> node, T data) {
+	private TreeNode<T> removeRec(TreeNode<T> node, T data) {
 		if (node == null) return null;
 		else if (data.compareTo(node.getData()) < 0) {
 			node.setLeft(removeRec(node.getLeft(), data));
