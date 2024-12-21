@@ -44,7 +44,7 @@ public class NodeBST<T extends Comparable<? super T>> {
 		this.root = insertRec(this.root, data);
 	}
 	
-	public TreeNode<T> insertRec(TreeNode<T> node, T data) {
+	protected TreeNode<T> insertRec(TreeNode<T> node, T data) {
 		if (node == null) {
 			this.size++;
 			return new TreeNode<T>(data);
@@ -62,6 +62,12 @@ public class NodeBST<T extends Comparable<? super T>> {
 	public boolean remove(T data) {
 		if (!contains(data)) return false;
 		this.root = removeRec(this.root, data);
+		if (this.root != null && this.root.getParent() != null) {
+			@SuppressWarnings("unused")
+			TreeNode<T> parent = this.root.getParent();
+			parent = null;
+			this.root.setParent(null);
+		}
 		this.size--;
 		return true;
 	}
@@ -81,33 +87,9 @@ public class NodeBST<T extends Comparable<? super T>> {
 			node.setRight(removeRec(node.getRight(), node.getData()));
 		}
 		return node;
-//		if (isEmpty()) return null;
-//		if (data.compareTo(node.getData()) == 0) {
-//			if (isExternal(node)) {
-//				if (node != this.root) {
-//					TreeNode<T> parent = node.getParent();
-//					if (node == node.getParent().getLeft()) node.getParent().setLeft(null);
-//					else node.getParent().setRight(null);
-//					node.setParent(null);
-//					return parent;
-//				} else this.root = null;
-//			} else {
-//				T replace = null;
-//				if (node.getRight() != null) {
-//					replace = findMin(node.getRight());
-//					removeRec(node.getRight(), replace);
-//				} else {
-//					replace = findMax(node.getLeft());
-//					removeRec(node.getLeft(), replace);
-//				}
-//				node.setData(replace);
-//			}
-//		} else if (data.compareTo(node.getData()) < 0) removeRec(node.getLeft(), data);
-//		else removeRec(node.getRight(), data);
-//		return node;
 	}
 	
-	public T findMin(TreeNode<T> node) {
+	private T findMin(TreeNode<T> node) {
 		TreeNode<T> curr = node;
 		while (curr.getLeft() != null) {
 			curr = curr.getLeft();
@@ -115,7 +97,8 @@ public class NodeBST<T extends Comparable<? super T>> {
 		return curr.getData();
 	}
 	
-	public T findMax(TreeNode<T> node) {
+	@SuppressWarnings("unused")
+	private T findMax(TreeNode<T> node) {
 		TreeNode<T> curr = node;
 		while (curr.getRight() != null) {
 			curr = curr.getRight();
@@ -123,7 +106,8 @@ public class NodeBST<T extends Comparable<? super T>> {
 		return curr.getData();
 	}
 	
-	public boolean isExternal(TreeNode<T> node) {
+	@SuppressWarnings("unused")
+	private boolean isExternal(TreeNode<T> node) {
 		if (node.getLeft() == null && node.getRight() == null) return true;
 		return false;
 	}

@@ -15,6 +15,7 @@ public class Test {
 //		testNBST();
 //		testABST();
 //		testNAVL();
+		testAAVL();
 	}
 	
 	public static void testSLL() {
@@ -1130,5 +1131,56 @@ public class Test {
         tree.preorder();
         tree.postorder();
         tree.inorder();
+	}
+	
+	public static void testAAVL() {
+//      ArrayBST<Integer> tree = new ArrayBST<>();
+      ArrayAVL<Integer> tree = new ArrayAVL<>();
+      tree.insert(5);
+      tree.insert(1);
+      tree.insert(7);
+      tree.insert(2);
+      tree.insert(3);
+      tree.insert(4);
+      tree.insert(6);
+      tree.insert(8);
+      tree.insert(9);
+      System.out.println("Height: " + tree.getHeight(0));
+      tree.levelorder();
+      tree.preorder();
+      tree.postorder();
+      tree.inorder();
+      tree.remove(9);
+      tree.remove(8);
+      System.out.println("Height: " + tree.getHeight(0));
+      tree.levelorder();
+      tree.preorder();
+      tree.postorder();
+      tree.inorder();
+      tree.remove(4);
+      System.out.println("Height: " + tree.getHeight(0));
+      tree.levelorder();
+      tree.preorder();
+      tree.postorder();
+      tree.inorder();
+      tree.remove(5);
+      tree.remove(7);
+      tree.remove(6);
+      System.out.println("Height: " + tree.getHeight(0));
+      tree.levelorder();
+      tree.preorder();
+      tree.postorder();
+      tree.inorder();
+      tree.remove(2);
+      tree.remove(3);
+      tree.remove(1);
+      tree.remove(2);
+      tree.remove(2);
+      tree.remove(2);
+      System.out.println("Height: " + tree.getHeight(0));
+      tree.levelorder();
+      tree.preorder();
+      tree.postorder();
+      tree.inorder();
 	}
 }

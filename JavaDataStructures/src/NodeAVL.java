@@ -1,7 +1,7 @@
 
 public class NodeAVL<T extends Comparable<? super T>> extends NodeBST<T> {
 	@Override
-	public NodeBST<T>.TreeNode<T> insertRec(NodeBST<T>.TreeNode<T> node, T data) {
+	protected NodeBST<T>.TreeNode<T> insertRec(NodeBST<T>.TreeNode<T> node, T data) {
 		node = super.insertRec(node, data);
 		updateHeight(node);
 		return rebalanceInsert(node);
@@ -30,10 +30,10 @@ public class NodeAVL<T extends Comparable<? super T>> extends NodeBST<T> {
 	
 	private TreeNode<T> rebalance(TreeNode<T> node) {
 		if (getBalanceFactor(node) > 1) {
-			if (getBalanceFactor(node.getLeft()) <= -1) return rotateLR(node);
+			if (getBalanceFactor(node.getLeft()) < 0) return rotateLR(node);
 			return rightRotate(node);
 		} else if (getBalanceFactor(node) < -1) {
-			if (getBalanceFactor(node.getRight()) >= 1) return rotateRL(node);
+			if (getBalanceFactor(node.getRight()) > 0) return rotateRL(node);
 			return leftRotate(node);
 		}
 		return node;

@@ -7,6 +7,10 @@ public class ArrayBST<T extends Comparable<? super T>> {
 	private T[] array;
 	private int size = 0;
 	
+	protected T[] getArray() {
+		return this.array;
+	}
+	
 	public ArrayBST() {
 		this(CAPACITY);
 	}
@@ -14,18 +18,6 @@ public class ArrayBST<T extends Comparable<? super T>> {
 	@SuppressWarnings("unchecked")
 	public ArrayBST(int capacity) {
 		this.array = (T[]) new Comparable[capacity];
-	}
-	
-	public T getRoot() {
-		return this.array[0];
-	}
-	
-	public T getPosition(int index) {
-		return this.array[index];
-	}
-	
-	public void setPosition(int index, T data) {
-		this.array[index] = data;
 	}
 	
 	public int size() {
@@ -36,17 +28,39 @@ public class ArrayBST<T extends Comparable<? super T>> {
 		return this.size == 0;
 	}
 	
+	public String toString() {
+		//Work in progress!
+		if (isEmpty()) return null;
+		String res = "";
+		int k = getHeight(0), repeat = (int) Math.pow(2, k-1);
+		for (int i = 0;i < k;i++) {
+			res += " ".repeat((int) (repeat/(Math.pow(2, i))));
+			for (int j = start(i);j < Math.pow(2, i)+start(i);j++) {
+				if (this.array[j] != null) res += this.array[j].toString();
+				res += " ".repeat((int) (repeat/Math.pow(2, i)));
+				if (j == 0) break;
+			}
+			res += "\n";
+		}
+		return res;
+	}
+	
+	private int start(int h) {
+		int sum = 0;
+		for (int i = 0;i < h;i++) {
+			sum += Math.pow(2, i);
+		}
+		return sum;
+	}
+	
 	public int getHeight(int index) {
 		if (isEmpty()) return 0;
 		if (index < 0) return 0;
-		int max = height(index);
-		Queue<Integer> q = new LinkedList<>();
-		q.add(index);
-		while (!q.isEmpty()) {
-			int curr = q.poll();
-			if (max < height(curr)) max = height(curr);
-			if (this.array[left(curr)] != null) q.add(left(curr));
-			if (this.array[right(curr)] != null) q.add(right(curr));
+		int max = Integer.MIN_VALUE;
+		for (int i = index, j = 0;i < this.array.length;i++) {
+			if (this.array[i] != null)
+				j = height(i);
+				if (j > max) max = j;
 		}
 		return max;
 	}
@@ -57,12 +71,12 @@ public class ArrayBST<T extends Comparable<? super T>> {
 		else return 1 + getDepth(rightParent(index));
 	}
 	
-	public int height(int index) {
+	protected int height(int index) {
 		if (index < 0) return 0;
-		int res = 0, iter = 0;
-		do iter += Math.pow(2, res++);
-		while (iter < index);
-		return res;
+		index++;
+		int iter = 0, sum = 0;
+		while (index > sum) sum += Math.pow(2, iter++);
+		return iter;
 	}
 	
 	public void insert(T data) {
@@ -70,7 +84,7 @@ public class ArrayBST<T extends Comparable<? super T>> {
 		insertRec(0, data);
 	}
 	
-	public void insertRec(int index, T data) {
+	protected void insertRec(int index, T data) {
 		if (this.array[index] == null) {
 			this.size++;
 			this.array[index] = data;
@@ -87,37 +101,36 @@ public class ArrayBST<T extends Comparable<? super T>> {
 		return true;
 	}
 	
-	public void removeRec(int index, T data) {
-		if (data.compareTo(this.array[index]) == 0) {
-			if (isExternal(index)) {
-				this.array[index] = null;
+	private void removeRec(int index, T data) {
+		if (data.compareTo(this.array[index]) < 0) removeRec(left(index), data);
+		else if (data.compareTo(this.array[index]) > 0) removeRec(right(index), data);
+		else {
+			T res = null;
+			if (isExternal(index)) this.array[index] = null;
+			else if (this.array[right(index)] == null) {
+				res = findMax(left(index));
+				removeRec(left(index), res);
 			} else {
-				T rep = null;
-				if (this.array[right(index)] != null) {
-					rep = findMin(right(index));
-					removeRec(right(index), rep);
-				}
-				else {
-					rep = findMax(left(index));
-					removeRec(left(index), rep);
-				}
-				this.array[index] = rep;
+				res = findMin(right(index));
+				removeRec(right(index), res);
 			}
-		} else if (data.compareTo(this.array[index]) < 0) removeRec(left(index), data);
-		else removeRec(right(index), data);
+			this.array[index] = res;
+		}
 	}
 	
-	public T findMin(int index) {
+	private T findMin(int index) {
+		if (this.array[index] == null) return null;
 		while (this.array[left(index)] != null) index = left(index);
 		return this.array[index];
 	}
 	
-	public T findMax(int index) {
+	private T findMax(int index) {
+		if (this.array[index] == null) return null;
 		while (this.array[right(index)] != null) index = right(index);
 		return this.array[index];
 	}
 	
-	public boolean isExternal(int index) {
+	private boolean isExternal(int index) {
 		if (this.array[left(index)] == null && this.array[right(index)] == null) return true;
 		return false;
 	}
@@ -208,19 +221,19 @@ public class ArrayBST<T extends Comparable<? super T>> {
 		System.out.println(res.substring(0, res.length()-2));
 	}
 	
-	public int left(int index) {
+	protected int left(int index) {
 		return 2*index+1;
 	}
 	
-	public int right(int index) {
+	protected int right(int index) {
 		return 2*index+2;
 	}
 	
-	public int leftParent(int index) {
+	protected int leftParent(int index) {
 		return (index-1)/2;
 	}
 	
-	public int rightParent(int index) {
+	protected int rightParent(int index) {
 		return (index-2)/2;
 	}
 }
