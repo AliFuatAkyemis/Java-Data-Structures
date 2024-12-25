@@ -80,7 +80,7 @@ public class ArrayBST<T extends Comparable<? super T>> {
 	}
 	
 	public void insert(T data) {
-		if (contains(data)) return;
+		if (bfs(data)) return;
 		insertRec(0, data);
 	}
 	
@@ -95,7 +95,7 @@ public class ArrayBST<T extends Comparable<? super T>> {
 	}
 	
 	public boolean remove(T data) {
-		if (!contains(data)) return false;
+		if (!dfs(data)) return false;
 		removeRec(0, data);
 		this.size--;
 		return true;
@@ -135,7 +135,7 @@ public class ArrayBST<T extends Comparable<? super T>> {
 		return false;
 	}
 	
-	public boolean contains(T data) {
+	public boolean bfs(T data) {
 		if (isEmpty()) return false;
 		Queue<Integer> q = new LinkedList<>();
 		q.add(0);
@@ -144,6 +144,19 @@ public class ArrayBST<T extends Comparable<? super T>> {
 			if (this.array[curr].compareTo(data) == 0) return true;
 			if (this.array[left(curr)] != null) q.add(left(curr));
 			if (this.array[right(curr)] != null) q.add(right(curr));
+		}
+		return false;
+	}
+	
+	public boolean dfs(T data) {
+		if (isEmpty()) return false;
+		Stack<Integer> s = new Stack<>();
+		s.push(0);
+		while (!s.isEmpty()) {
+			int curr = s.pop();
+			if (data.compareTo(this.array[curr]) == 0) return true;
+			if (this.array[left(curr)] != null) s.push(left(curr));
+			if (this.array[right(curr)] != null) s.push(right(curr));
 		}
 		return false;
 	}

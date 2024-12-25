@@ -15,7 +15,7 @@ public class Test {
 //		testNBST();
 //		testABST();
 //		testNAVL();
-		testAAVL();
+//		testAAVL();
 	}
 	
 	public static void testSLL() {

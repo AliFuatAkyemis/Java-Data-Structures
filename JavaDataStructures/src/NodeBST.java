@@ -40,7 +40,7 @@ public class NodeBST<T extends Comparable<? super T>> {
 	}
 	
 	public void insert(T data) {
-		if (contains(data)) return;
+		if (bfs(data)) return;
 		this.root = insertRec(this.root, data);
 	}
 	
@@ -60,7 +60,7 @@ public class NodeBST<T extends Comparable<? super T>> {
 	}
 	
 	public boolean remove(T data) {
-		if (!contains(data)) return false;
+		if (!dfs(data)) return false;
 		this.root = removeRec(this.root, data);
 		if (this.root != null && this.root.getParent() != null) {
 			@SuppressWarnings("unused")
@@ -112,7 +112,7 @@ public class NodeBST<T extends Comparable<? super T>> {
 		return false;
 	}
 	
-	public boolean contains(T data) {
+	public boolean bfs(T data) {
 		if (isEmpty()) return false;
 		Queue<TreeNode<T>> q = new LinkedList<>();
 		q.add(this.root);
@@ -121,6 +121,19 @@ public class NodeBST<T extends Comparable<? super T>> {
 			if (data.compareTo(curr.getData()) == 0) return true;
 			if (curr.getLeft() != null) q.add(curr.getLeft());
 			if (curr.getRight() != null) q.add(curr.getRight());
+		}
+		return false;
+	}
+	
+	public boolean dfs(T data) {
+		if (isEmpty()) return false;
+		Stack<TreeNode<T>> s = new Stack<>();
+		s.push(this.root);
+		while (!s.isEmpty()) {
+			TreeNode<T> curr = s.pop();
+			if (data.compareTo(curr.getData()) == 0) return true;
+			if (curr.getRight() != null) s.push(curr.getRight());
+			if (curr.getLeft() != null) s.push(curr.getLeft());
 		}
 		return false;
 	}
