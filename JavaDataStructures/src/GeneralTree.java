@@ -1,7 +1,5 @@
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 
 public class GeneralTree<T> {
 	private TreeNode<T> root;
@@ -28,22 +26,17 @@ public class GeneralTree<T> {
 	}
 	
 	public void insert(T data) {
-		
+		if (this.root == null) this.root = new TreeNode<T>(data);
+		else {
+			
+		}
 	}
 	
 	public void remove(T data) {
 		
 	}
 	
-	public boolean contains(T data) {
-		if (isEmpty()) return false;
-		Queue<TreeNode<T>> q = new LinkedList<>();
-		q.add(this.root);
-		while (!q.isEmpty()) {
-			TreeNode<T> curr = q.poll();
-			if (curr.getData() == data) return true;
-			
-		}
+	public boolean contains(TreeNode<T> node, T data) {
 		return false;
 	}
 	
