@@ -1,6 +1,76 @@
 
 public class LinkedQueue<T> {
+	public static void main(String[] args) {
+		LinkedQueue<Integer> q = new LinkedQueue<>();
+		q.enqueue(1);
+		q.enqueue(2);
+		q.enqueue(3);
+		q.enqueue(4);
+		q.enqueue(5);
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+		System.out.println("Dequeued: " + q.dequeue());
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+		System.out.println("Dequeued: " + q.dequeue());
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+		System.out.println("Dequeued: " + q.dequeue());
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+		System.out.println("Dequeued: " + q.dequeue());
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+		System.out.println("Dequeued: " + q.dequeue());
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+		System.out.println("Dequeued: " + q.dequeue());
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+		System.out.println("Dequeued: " + q.dequeue());
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+		q.enqueue(1);
+		q.enqueue(2);
+		q.enqueue(3);
+		q.enqueue(4);
+		q.enqueue(5);
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+		System.out.println("Dequeued: " + q.dequeue());
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+		System.out.println("Dequeued: " + q.dequeue());
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+		System.out.println("Dequeued: " + q.dequeue());
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+		System.out.println("Dequeued: " + q.dequeue());
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+		System.out.println("Dequeued: " + q.dequeue());
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+		System.out.println("Dequeued: " + q.dequeue());
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+		System.out.println("Dequeued: " + q.dequeue());
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+		q.enqueue(1);
+		q.enqueue(2);
+		q.enqueue(3);
+		q.enqueue(4);
+		q.enqueue(5);
+		System.out.println("Size: " + q.size());
+		System.out.println(q.toString());
+	}
+
 	private Node<T> first;
+	private Node<T> last;
 	private int size = 0;
 	
 	public int size() {
@@ -31,13 +101,21 @@ public class LinkedQueue<T> {
 		if (isEmpty()) return null;
 		Node<T> res = this.first;
 		this.first = this.first.getNext();
+		if (this.first == null) this.last = null;
 		res.setNext(null);
 		this.size--;
 		return res.getData();
 	}
 	
 	public void enqueue(T data) {
-		this.first = new Node<T>(data, this.first);
+		Node<T> newNode = new Node<T>(data);
+		if (isEmpty()) {
+			this.first = newNode;
+			this.last = newNode;
+		} else {
+			this.last.setNext(newNode);
+			this.last = this.last.getNext();
+		}
 		this.size++;
 	}
 	

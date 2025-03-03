@@ -53,6 +53,7 @@ public class DoublyLinkedList<T> {
 		Node<T> temp = this.header;
 		this.header = this.header.getNext();
 		if (size() > 1) this.header.setPrev(null);
+		else this.trailor = null;
 		temp.setNext(null);
 		this.size--;
 		return temp.getData();
@@ -63,6 +64,7 @@ public class DoublyLinkedList<T> {
 		Node<T> temp = this.trailor;
 		this.trailor = this.trailor.getPrev();
 		if (size() > 1) this.trailor.setNext(null);
+		else this.header = null;
 		temp.setPrev(null);
 		this.size--;
 		return temp.getData();

@@ -46,6 +46,7 @@ public class SinglyLinkedList<T> {
 		if (isEmpty()) return null;
 		Node<T> temp = this.head;
 		this.head = this.head.getNext();
+		if (this.head == null) this.tail = null;
 		temp.setNext(null);
 		this.size--;
 		return temp.getData();

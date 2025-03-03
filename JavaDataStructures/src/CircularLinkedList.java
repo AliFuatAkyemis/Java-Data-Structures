@@ -53,6 +53,10 @@ public class CircularLinkedList<T> {
 		this.tail.setNext(this.head);
 		temp.setNext(null);
 		this.size--;
+		if (this.size == 0) {
+			this.head = null;
+			this.tail = null;
+		}
 		return temp.getData();
 	}
 	
