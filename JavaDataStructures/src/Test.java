@@ -4,7 +4,7 @@ public class Test {
 //		testSLL();
 //		testDLL();
 //		testCLL();
-		testLS();
+//		testLS();
 //		testAS();
 //		testLQ();
 //		testAQ();
